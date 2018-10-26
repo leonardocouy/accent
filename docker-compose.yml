@@ -1,0 +1,19 @@
+version: '3'
+services:
+  app:
+    command: "mix phx.server && npm --prefix webapp run start"
+    build: .
+    restart: always
+    stdin_open: true
+    ports:
+      - "4000:4000"
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:10-alpine
+    volumes:
+      - database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+volumes:
+  database:
